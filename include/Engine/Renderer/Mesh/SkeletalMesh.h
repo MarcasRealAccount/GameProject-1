@@ -1,6 +1,7 @@
 //	
 //	Created by MarcasRealAccount on 30. Oct. 2020
 //	
+#pragma once
 
 #include "Engine/Renderer/Mesh/Mesh.h"
 
