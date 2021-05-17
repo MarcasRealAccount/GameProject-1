@@ -22,9 +22,7 @@ namespace gp1::window
 	void Window::Init()
 	{
 		if (!glfwInit())
-		{
-			m_Logger.Log(Severity::Error, "Failed to initialize GLFW!");
-		}
+			m_Logger.LogError("Failed to initialize GLFW!");
 
 		glfwDefaultWindowHints();
 		for (auto& windowHint : m_WindowHints)
@@ -131,14 +129,14 @@ namespace gp1::window
 			events::EventHandler::PushEvent(event);
 		});
 
-		m_Logger.Log(Severity::Trace, "Window was created successfully.");
+		m_Logger.LogInfo("Window was created successfully.");
 	}
 
 	void Window::DeInit()
 	{
 		glfwDestroyWindow(m_NativeHandle);
 		glfwTerminate();
-		m_Logger.Log(Severity::Trace, "Window terminated.");
+		m_Logger.LogInfo("Window terminated.");
 	}
 
 	void Window::OnUpdate()

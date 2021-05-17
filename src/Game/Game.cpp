@@ -41,7 +41,7 @@ Game::Game()
 	input::InputGroup*         inMenu    = input::InputHandler::GetOrCreateInputGroup("inMenu");
 	input::ButtonInputBinding* closeMenu = inMenu->CreateButtonInputBinding("closeMenu", input::buttons::gamepadTriangle, input::ButtonInputType::PRESS, input::InputLocation::GAMEPAD);
 	closeMenu->BindCallback(std::bind(&Game::CloseMenuCallback, this, std::placeholders::_1));
-	m_Logger.LogDebug("CloseMenu keybind is: %u, on device: %u", closeMenu->GetIndex(), static_cast<uint32_t>(closeMenu->GetLocation()));
+	m_Logger.LogDebug("CloseMenu keybind is: {}, on device: {}", closeMenu->GetIndex(), static_cast<uint32_t>(closeMenu->GetLocation()));
 
 	// First get or create a new InputGroup with InputHandler::GetOrCreateInputGroup(name):
 	input::InputGroup* onFoot = input::InputHandler::GetOrCreateInputGroup("onFoot");
@@ -52,43 +52,46 @@ Game::Game()
 	openMenu->BindCallback(std::bind(&Game::OpenMenuCallback, this, std::placeholders::_1));
 	// The callback is void(gp1::input::ButtonCallbackData data) or void(gp1::input::AxisCallbackData data) depending on what type of binding.
 	// For an example setup look at the callbacks in this class.
-	m_Logger.LogDebug("OpenMenu keybind is: %u, on device: %u", openMenu->GetIndex(), static_cast<uint32_t>(openMenu->GetLocation()));
+	m_Logger.LogDebug("OpenMenu keybind is: {}, on device: {}", openMenu->GetIndex(), static_cast<uint32_t>(openMenu->GetLocation()));
 
 	input::AxisInputBinding* lookX = onFoot->CreateAxisInputBinding("lookX", input::axises::gamepadLeftTrigger, input::InputLocation::GAMEPAD);
 	lookX->BindCallback(std::bind(&Game::LookCallback, this, std::placeholders::_1));
-	m_Logger.LogDebug("LookX keybind is: %u, on device: %u", lookX->GetIndex(), static_cast<uint32_t>(lookX->GetLocation()));
+	m_Logger.LogDebug("LookX keybind is: {}, on device: {}", lookX->GetIndex(), static_cast<uint32_t>(lookX->GetLocation()));
 
 	input::AxisInputBinding* lookY = onFoot->CreateAxisInputBinding("lookY", input::axises::gamepadRightTrigger, input::InputLocation::GAMEPAD);
 	lookY->BindCallback(std::bind(&Game::LookCallback, this, std::placeholders::_1));
-	m_Logger.LogDebug("LookY keybind is: %u, on device: %u", lookY->GetIndex(), static_cast<uint32_t>(lookY->GetLocation()));
+	m_Logger.LogDebug("LookY keybind is: {}\non device: {}", lookY->GetIndex(), static_cast<uint32_t>(lookY->GetLocation()));
 
 	gp1::renderer::DebugRenderer::DebugDrawPoint({ 0.0f, 0.0f, -2.0f }, 10.0f);
 	gp1::renderer::DebugRenderer::DebugDrawSphere({ 0.0f, 0.0f, 2.0f }, 1.0f, 10.0f);
 	gp1::renderer::DebugRenderer::DebugDrawLine({ -2.0f, 1.0f, -4.0f }, { 2.0f, -1.0f, -2.0f }, 10.0f);
 	gp1::renderer::DebugRenderer::DebugDrawBox({ 0.0f, 0.0f, -3.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 45.0f, 0.0f }, 10.0f);
+
+	Logger("Another Category").LogWarn("{:*>{}}", 5, 3);
+	Logger("Wut Happened").LogError("{:{2}^{1}}", -151234, 10, '?');
 }
 
 void Game::LookCallback(input::AxisCallbackData data)
 {
 	if (data.m_Id == "lookX")
 	{
-		m_Logger.LogDebug("Moved mouse X to %f", data.m_Value);
+		m_Logger.LogDebug("Moved mouse X to {}", data.m_Value);
 	}
 	else if (data.m_Id == "lookY")
 	{
-		m_Logger.LogDebug("Moved mouse Y to %f", data.m_Value);
+		m_Logger.LogDebug("Moved mouse Y to {}", data.m_Value);
 	}
 }
 
 void Game::OpenMenuCallback(input::ButtonCallbackData data)
 {
-	m_Logger.LogDebug("Opened Menu %u", (uint32_t) data.m_InputType);
+	m_Logger.LogDebug("Opened Menu {}", (uint32_t) data.m_InputType);
 	input::InputHandler::SetCurrentActiveInputGroup("inMenu");
 }
 
 void Game::CloseMenuCallback(input::ButtonCallbackData data)
 {
-	m_Logger.LogDebug("Closed Menu %u", (uint32_t) data.m_InputType);
+	m_Logger.LogDebug("Closed Menu {}", (uint32_t) data.m_InputType);
 	input::InputHandler::SetCurrentActiveInputGroup("onFoot");
 }
 
