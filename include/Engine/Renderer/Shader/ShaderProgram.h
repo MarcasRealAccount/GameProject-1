@@ -7,8 +7,8 @@
 #include "Engine/Renderer/DynamicRendererData.h"
 #include "Engine/Renderer/Material/Uniform.h"
 #include "Engine/Renderer/Shader/Shader.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
-#include <memory>
 #include <string>
 #include <vector>
 
@@ -50,7 +50,7 @@ namespace gp1::renderer
 	public:
 		friend Material;
 
-		static std::shared_ptr<ShaderProgram> Create();
+		static smart_pointers::shared_ptr<ShaderProgram> Create();
 
 	public:
 		virtual ~ShaderProgram() = default;
@@ -76,13 +76,13 @@ namespace gp1::renderer
 	protected:
 		ShaderProgram() = default;
 
-		void AddMaterial(std::shared_ptr<Material> material);
-		void RemoveMaterial(std::shared_ptr<Material> material);
+		void AddMaterial(const smart_pointers::shared_ptr<Material>& material);
+		void RemoveMaterial(const smart_pointers::shared_ptr<Material>& material);
 
 	protected:
-		std::vector<Shader>                  m_Shaders;
-		std::vector<UniformBufferTemplate>   m_UniformBuffers;
-		std::vector<std::weak_ptr<Material>> m_Materials;
+		std::vector<Shader>                             m_Shaders;
+		std::vector<UniformBufferTemplate>              m_UniformBuffers;
+		std::vector<smart_pointers::weak_ptr<Material>> m_Materials;
 
 		bool m_UniformBuffersDirty = true;
 	};

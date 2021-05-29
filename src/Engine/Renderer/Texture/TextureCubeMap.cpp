@@ -4,10 +4,11 @@
 
 #include "Engine/Renderer/Texture/TextureCubeMap.h"
 #include "Engine/Application.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 namespace gp1::renderer
 {
-	std::shared_ptr<TextureCubeMap> TextureCubeMap::Create()
+	smart_pointers::shared_ptr<TextureCubeMap> TextureCubeMap::Create()
 	{
 		return Application::GetInstance()->GetRenderer()->CreateTextureCubeMap();
 	}

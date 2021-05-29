@@ -11,6 +11,7 @@
 #include "Engine/Renderer/Apis/OpenGL/Shader/OpenGLShaderProgram.h"
 #include "Engine/Renderer/Material/ReservedUniformBuffers.h"
 #include "Engine/Utility/Logger.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 #include <cstdint>
 #include <set>
@@ -54,7 +55,7 @@ namespace gp1::renderer::opengl
 		{
 			for (auto& material : m_Materials)
 			{
-				std::shared_ptr<OpenGLMaterial> mat = std::reinterpret_pointer_cast<OpenGLMaterial>(material.lock());
+				smart_pointers::shared_ptr<OpenGLMaterial> mat = smart_pointers::reinterpret_pointer_cast<OpenGLMaterial>(material.lock());
 				mat->UpdateGLData();
 			}
 			m_Dirty = false;

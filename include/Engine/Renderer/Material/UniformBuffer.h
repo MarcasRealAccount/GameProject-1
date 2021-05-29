@@ -6,8 +6,8 @@
 
 #include "Engine/Renderer/Material/Uniform.h"
 #include "Engine/Renderer/RendererData.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
-#include <memory>
 #include <string>
 #include <vector>
 
@@ -19,11 +19,11 @@ namespace gp1::renderer
 		struct UniformInfo
 		{
 		public:
-			std::string              m_Name;
-			std::shared_ptr<Uniform> m_Uniform;
+			std::string                         m_Name;
+			smart_pointers::shared_ptr<Uniform> m_Uniform;
 		};
 
-		static std::shared_ptr<UniformBuffer> Create();
+		static smart_pointers::shared_ptr<UniformBuffer> Create();
 
 	public:
 		void UpdateUniforms(std::vector<std::pair<std::string, EUniformType>> uniformTypes);
@@ -31,11 +31,11 @@ namespace gp1::renderer
 		bool IsDirty() const;
 		void ClearDirty();
 
-		std::shared_ptr<Uniform> GetUniform(std::string_view name) const;
+		smart_pointers::shared_ptr<Uniform> GetUniform(std::string_view name) const;
 		template <typename T, std::enable_if_t<std::is_base_of_v<Uniform, T>, bool> = true>
-		std::shared_ptr<T> GetUniform(std::string_view name) const
+		smart_pointers::shared_ptr<T> GetUniform(std::string_view name) const
 		{
-			return std::reinterpret_pointer_cast<T>(GetUniform(name));
+			return smart_pointers::reinterpret_pointer_cast<T>(GetUniform(name));
 		}
 
 	protected:

@@ -3,6 +3,7 @@
 //
 
 #include "Engine/Renderer/Material/ReservedUniformBuffers.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 namespace gp1::renderer
 {
@@ -20,7 +21,7 @@ namespace gp1::renderer
 		m_UniformBuffers[7] = { "Reserved8", nullptr };
 	}
 
-	std::shared_ptr<UniformBuffer> ReservedUniformBuffers::GetUniformBuffer(const std::string& name) const
+	smart_pointers::shared_ptr<UniformBuffer> ReservedUniformBuffers::GetUniformBuffer(const std::string& name) const
 	{
 		for (auto& uniformBuffer : m_UniformBuffers)
 			if (uniformBuffer.m_Name == name)
@@ -28,9 +29,9 @@ namespace gp1::renderer
 		return nullptr;
 	}
 
-	std::shared_ptr<Uniform> ReservedUniformBuffers::GetUniform(const std::string& bufferName, const std::string& uniformName) const
+	smart_pointers::shared_ptr<Uniform> ReservedUniformBuffers::GetUniform(const std::string& bufferName, const std::string& uniformName) const
 	{
-		std::shared_ptr<UniformBuffer> uniformBuffer = GetUniformBuffer(bufferName);
+		smart_pointers::shared_ptr<UniformBuffer> uniformBuffer = GetUniformBuffer(bufferName);
 		if (uniformBuffer)
 			return uniformBuffer->GetUniform(uniformName);
 		return nullptr;

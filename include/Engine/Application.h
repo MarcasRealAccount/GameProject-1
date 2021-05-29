@@ -9,9 +9,8 @@
 #include "Engine/Scene/RenderableEntity.h"
 #include "Engine/Scene/Scene.h"
 #include "Engine/Utility/Core.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 #include "Engine/Window/Window.h"
-
-#include <memory>
 
 namespace gp1
 {
@@ -24,19 +23,19 @@ namespace gp1
 
 		virtual void Update(float deltaTime) override;
 
-		inline virtual std::shared_ptr<renderer::Mesh> GetMesh() const override
+		inline virtual smart_pointers::shared_ptr<renderer::Mesh> GetMesh() const override
 		{
 			return m_Mesh;
 		}
 
-		inline virtual std::shared_ptr<renderer::Material> GetMaterial() const override
+		inline virtual smart_pointers::shared_ptr<renderer::Material> GetMaterial() const override
 		{
 			return m_Material;
 		}
 
 	private:
-		std::shared_ptr<renderer::StaticMesh> m_Mesh;
-		std::shared_ptr<renderer::Material>   m_Material;
+		smart_pointers::shared_ptr<renderer::StaticMesh> m_Mesh;
+		smart_pointers::shared_ptr<renderer::Material>   m_Material;
 	};
 	//----
 
@@ -55,7 +54,7 @@ namespace gp1
 			return m_Window;
 		}
 
-		inline std::shared_ptr<renderer::Renderer> GetRenderer() const
+		inline smart_pointers::shared_ptr<renderer::Renderer> GetRenderer() const
 		{
 			return m_Renderer;
 		}
@@ -78,14 +77,14 @@ namespace gp1
 		window::Window m_Window { { 1280, 720, 1280, 720, "Cherno Community Game Project 1", window::WindowMode::WINDOWED, false } }; // The window of this application.
 
 		scene::Scene                   m_Scene; // The scene to use for this application.
-		std::shared_ptr<scene::Camera> m_Camera;
+		smart_pointers::shared_ptr<scene::Camera> m_Camera;
 
 		//----
 		// TODO(MarcasRealAccount): Please remove this when some actual rendering will take place, as this is just a test entity.
-		std::shared_ptr<TestEntity> m_TestEntities[10000];
+		smart_pointers::shared_ptr<TestEntity> m_TestEntities[10000];
 		//----
 
-		std::shared_ptr<renderer::Renderer> m_Renderer;
+		smart_pointers::shared_ptr<renderer::Renderer> m_Renderer;
 
 	private:
 		static Application* s_Instance; // The static application instance.

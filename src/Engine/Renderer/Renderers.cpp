@@ -2,18 +2,19 @@
 #include "Engine/Renderer/Apis/OpenGL/OpenGLRenderer.h"
 #include "Engine/Renderer/Apis/Vulkan/VulkanRenderer.h"
 #include "Engine/Utility/Core.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 namespace gp1::renderer
 {
 	Renderers* const Renderers::s_Renderers = new Renderers({
 #ifdef RENDERER_OPENGL
-	    RendererEntry("opengl", 0, []() -> std::shared_ptr<Renderer> {
-		    return std::make_shared<opengl::OpenGLRenderer>();
+	    RendererEntry("opengl", 0, []() -> smart_pointers::shared_ptr<Renderer> {
+		    return smart_pointers::make_shared<opengl::OpenGLRenderer>();
 	    }),
 #endif
 #ifdef RENDERER_VULKAN
-	    RendererEntry("vulkan", 1, []() -> std::shared_ptr<Renderer> {
-		    return std::make_shared<vulkan::VulkanRenderer>();
+	    RendererEntry("vulkan", 1, []() -> smart_pointers::shared_ptr<Renderer> {
+		    return smart_pointers::make_shared<vulkan::VulkanRenderer>();
 	    })
 #endif
 	});
@@ -24,7 +25,7 @@ namespace gp1::renderer
 	Renderers::Renderers(const std::initializer_list<RendererEntry>& entries)
 	    : m_Renderers(entries) {}
 
-	std::shared_ptr<Renderer> Renderers::GetRenderer(const std::string& name)
+	smart_pointers::shared_ptr<Renderer> Renderers::GetRenderer(const std::string& name)
 	{
 		for (auto& entry : m_Renderers)
 		{
@@ -33,7 +34,7 @@ namespace gp1::renderer
 				if (!entry.m_Renderer.expired())
 					return entry.m_Renderer.lock();
 
-				std::shared_ptr<Renderer> renderer = entry.m_CreateRenderer();
+				smart_pointers::shared_ptr<Renderer> renderer = entry.m_CreateRenderer();
 				if (renderer->IsCompatible())
 				{
 					entry.m_Renderer = renderer;
@@ -44,7 +45,7 @@ namespace gp1::renderer
 		return nullptr;
 	}
 
-	std::shared_ptr<Renderer> Renderers::GetBestRenderer()
+	smart_pointers::shared_ptr<Renderer> Renderers::GetBestRenderer()
 	{
 		std::vector<RendererEntry*> bestOrder;
 		bestOrder.reserve(m_Renderers.size());
@@ -72,7 +73,7 @@ namespace gp1::renderer
 			if (!entry->m_Renderer.expired())
 				return entry->m_Renderer.lock();
 
-			std::shared_ptr<Renderer> renderer = entry->m_CreateRenderer();
+			smart_pointers::shared_ptr<Renderer> renderer = entry->m_CreateRenderer();
 			if (renderer->IsCompatible())
 			{
 				entry->m_Renderer = renderer;
@@ -82,7 +83,7 @@ namespace gp1::renderer
 		return nullptr;
 	}
 
-	std::string Renderers::GetName(std::shared_ptr<Renderer> renderer) const
+	std::string Renderers::GetName(const smart_pointers::shared_ptr<Renderer>& renderer) const
 	{
 		for (auto& entry : m_Renderers)
 			if (!entry.m_Renderer.expired() && entry.m_Renderer.lock() == renderer)

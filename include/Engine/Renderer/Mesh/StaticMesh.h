@@ -5,9 +5,9 @@
 #pragma once
 
 #include "Engine/Renderer/Mesh/Mesh.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 #include <glm.hpp>
-#include <memory>
 #include <vector>
 
 namespace gp1::renderer
@@ -23,7 +23,7 @@ namespace gp1::renderer
 	struct StaticMesh : public Mesh
 	{
 	public:
-		static std::shared_ptr<StaticMesh> Create();
+		static smart_pointers::shared_ptr<StaticMesh> Create();
 
 	protected:
 		StaticMesh() = default;

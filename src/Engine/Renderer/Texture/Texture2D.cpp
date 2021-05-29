@@ -4,10 +4,11 @@
 
 #include "Engine/Renderer/Texture/Texture2D.h"
 #include "Engine/Application.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 namespace gp1::renderer
 {
-	std::shared_ptr<Texture2D> Texture2D::Create()
+	smart_pointers::shared_ptr<Texture2D> Texture2D::Create()
 	{
 		return Application::GetInstance()->GetRenderer()->CreateTexture2D();
 	}

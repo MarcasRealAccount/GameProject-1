@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Engine/Renderer/Material/UniformBuffer.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 namespace gp1::renderer
 {
@@ -16,20 +17,20 @@ namespace gp1::renderer
 		struct UniformBufferEntry
 		{
 		public:
-			std::string                    m_Name;
-			std::shared_ptr<UniformBuffer> m_UniformBuffer;
+			std::string                               m_Name;
+			smart_pointers::shared_ptr<UniformBuffer> m_UniformBuffer;
 		};
 
 	public:
 		virtual ~ReservedUniformBuffers() = default;
 
-		std::shared_ptr<UniformBuffer> GetUniformBuffer(const std::string& name) const;
-		std::shared_ptr<Uniform>       GetUniform(const std::string& bufferName, const std::string& uniformName) const;
+		smart_pointers::shared_ptr<UniformBuffer> GetUniformBuffer(const std::string& name) const;
+		smart_pointers::shared_ptr<Uniform>       GetUniform(const std::string& bufferName, const std::string& uniformName) const;
 
 		template <typename T, std::enable_if_t<std::is_base_of_v<Uniform, T>, bool> = true>
-		std::shared_ptr<T> GetUniform(const std::string& bufferName, const std::string& uniformName) const
+		smart_pointers::shared_ptr<T> GetUniform(const std::string& bufferName, const std::string& uniformName) const
 		{
-			return std::reinterpret_pointer_cast<T>(GetUniform(bufferName, uniformName));
+			return smart_pointers::reinterpret_pointer_cast<T>(GetUniform(bufferName, uniformName));
 		}
 
 	protected:

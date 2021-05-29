@@ -7,8 +7,7 @@
 #include "Engine/Renderer/Material/Material.h"
 #include "Engine/Renderer/Mesh/Mesh.h"
 #include "Engine/Scene/Entity.h"
-
-#include <memory>
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 namespace gp1::scene
 {
@@ -20,7 +19,7 @@ namespace gp1::scene
 			return true;
 		}
 
-		inline virtual std::shared_ptr<renderer::Mesh>     GetMesh() const     = 0;
-		inline virtual std::shared_ptr<renderer::Material> GetMaterial() const = 0;
+		inline virtual smart_pointers::shared_ptr<renderer::Mesh>     GetMesh() const     = 0;
+		inline virtual smart_pointers::shared_ptr<renderer::Material> GetMaterial() const = 0;
 	};
 } // namespace gp1::scene

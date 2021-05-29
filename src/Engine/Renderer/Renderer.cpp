@@ -3,12 +3,13 @@
 //
 
 #include "Engine/Renderer/Renderer.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 namespace gp1::renderer
 {
-	std::shared_ptr<StaticMesh> Renderer::CreateStaticMesh()
+	smart_pointers::shared_ptr<StaticMesh> Renderer::CreateStaticMesh()
 	{
-		std::shared_ptr<StaticMesh> mesh = OnCreateStaticMesh();
+		smart_pointers::shared_ptr<StaticMesh> mesh = OnCreateStaticMesh();
 		if (mesh)
 		{
 			m_StaticMeshes.push_back(mesh);
@@ -20,9 +21,9 @@ namespace gp1::renderer
 		return mesh;
 	}
 
-	std::shared_ptr<Material> Renderer::CreateMaterial()
+	smart_pointers::shared_ptr<Material> Renderer::CreateMaterial()
 	{
-		std::shared_ptr<Material> material = OnCreateMaterial();
+		smart_pointers::shared_ptr<Material> material = OnCreateMaterial();
 		if (material)
 		{
 			m_Materials.push_back(material);
@@ -34,9 +35,9 @@ namespace gp1::renderer
 		return material;
 	}
 
-	std::shared_ptr<Uniform> Renderer::CreateUniform(EUniformType type)
+	smart_pointers::shared_ptr<Uniform> Renderer::CreateUniform(EUniformType type)
 	{
-		std::shared_ptr<Uniform> uniform = OnCreateUniform(type);
+		smart_pointers::shared_ptr<Uniform> uniform = OnCreateUniform(type);
 		if (uniform)
 		{
 			m_Uniforms.push_back(uniform);
@@ -48,9 +49,9 @@ namespace gp1::renderer
 		return uniform;
 	}
 
-	std::shared_ptr<UniformBuffer> Renderer::CreateUniformBuffer()
+	smart_pointers::shared_ptr<UniformBuffer> Renderer::CreateUniformBuffer()
 	{
-		std::shared_ptr<UniformBuffer> uniformBuffer = OnCreateUniformBuffer();
+		smart_pointers::shared_ptr<UniformBuffer> uniformBuffer = OnCreateUniformBuffer();
 		if (uniformBuffer)
 		{
 			m_UniformBuffers.push_back(uniformBuffer);
@@ -62,9 +63,9 @@ namespace gp1::renderer
 		return uniformBuffer;
 	}
 
-	std::shared_ptr<ShaderProgram> Renderer::CreateShaderProgram()
+	smart_pointers::shared_ptr<ShaderProgram> Renderer::CreateShaderProgram()
 	{
-		std::shared_ptr<ShaderProgram> shaderProgram = OnCreateShaderProgram();
+		smart_pointers::shared_ptr<ShaderProgram> shaderProgram = OnCreateShaderProgram();
 		if (shaderProgram)
 		{
 			m_ShaderPrograms.push_back(shaderProgram);
@@ -73,9 +74,9 @@ namespace gp1::renderer
 		return shaderProgram;
 	}
 
-	std::shared_ptr<Texture2D> Renderer::CreateTexture2D()
+	smart_pointers::shared_ptr<Texture2D> Renderer::CreateTexture2D()
 	{
-		std::shared_ptr<Texture2D> texture2D = OnCreateTexture2D();
+		smart_pointers::shared_ptr<Texture2D> texture2D = OnCreateTexture2D();
 		if (texture2D)
 		{
 			m_Texture2Ds.push_back(texture2D);
@@ -87,9 +88,9 @@ namespace gp1::renderer
 		return texture2D;
 	}
 
-	std::shared_ptr<Texture2DArray> Renderer::CreateTexture2DArray()
+	smart_pointers::shared_ptr<Texture2DArray> Renderer::CreateTexture2DArray()
 	{
-		std::shared_ptr<Texture2DArray> texture2DArray = OnCreateTexture2DArray();
+		smart_pointers::shared_ptr<Texture2DArray> texture2DArray = OnCreateTexture2DArray();
 		if (texture2DArray)
 		{
 			m_Texture2DArrays.push_back(texture2DArray);
@@ -101,9 +102,9 @@ namespace gp1::renderer
 		return texture2DArray;
 	}
 
-	std::shared_ptr<Texture3D> Renderer::CreateTexture3D()
+	smart_pointers::shared_ptr<Texture3D> Renderer::CreateTexture3D()
 	{
-		std::shared_ptr<Texture3D> texture3D = OnCreateTexture3D();
+		smart_pointers::shared_ptr<Texture3D> texture3D = OnCreateTexture3D();
 		if (texture3D)
 		{
 			m_Texture3Ds.push_back(texture3D);
@@ -115,9 +116,9 @@ namespace gp1::renderer
 		return texture3D;
 	}
 
-	std::shared_ptr<TextureCubeMap> Renderer::CreateTextureCubeMap()
+	smart_pointers::shared_ptr<TextureCubeMap> Renderer::CreateTextureCubeMap()
 	{
-		std::shared_ptr<TextureCubeMap> textureCubeMap = OnCreateTextureCubeMap();
+		smart_pointers::shared_ptr<TextureCubeMap> textureCubeMap = OnCreateTextureCubeMap();
 		if (textureCubeMap)
 		{
 			m_TextureCubeMaps.push_back(textureCubeMap);
@@ -191,7 +192,7 @@ namespace gp1::renderer
 			}
 			else
 			{
-				std::shared_ptr<ShaderProgram> shaderProgram = itr->lock();
+				smart_pointers::shared_ptr<ShaderProgram> shaderProgram = itr->lock();
 				shaderProgram->Update();
 				itr++;
 			}
@@ -237,7 +238,7 @@ namespace gp1::renderer
 			}
 			else
 			{
-				std::shared_ptr<RendererData> data = itr->lock();
+				smart_pointers::shared_ptr<RendererData> data = itr->lock();
 				data->Update();
 				itr++;
 			}
@@ -251,7 +252,7 @@ namespace gp1::renderer
 		OnEndFrame();
 	}
 
-	void Renderer::Render(std::shared_ptr<scene::Camera> camera)
+	void Renderer::Render(const smart_pointers::shared_ptr<scene::Camera>& camera)
 	{
 		OnRender(camera);
 	}

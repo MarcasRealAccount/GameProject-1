@@ -20,6 +20,7 @@
 #include "Engine/Renderer/Apis/OpenGL/Texture/OpenGLTexture3D.h"
 #include "Engine/Renderer/Apis/OpenGL/Texture/OpenGLTextureCubeMap.h"
 #include "Engine/Scene/Camera.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 #include "Engine/Window/Window.h"
 
 #include <stdexcept>
@@ -58,81 +59,81 @@ namespace gp1::renderer::opengl
 		window.SetWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_FALSE);
 	}
 
-	std::shared_ptr<StaticMesh> OpenGLRenderer::OnCreateStaticMesh()
+	smart_pointers::shared_ptr<StaticMesh> OpenGLRenderer::OnCreateStaticMesh()
 	{
-		return std::make_shared<OpenGLStaticMesh>();
+		return smart_pointers::make_shared<OpenGLStaticMesh>();
 	}
 
-	std::shared_ptr<Material> OpenGLRenderer::OnCreateMaterial()
+	smart_pointers::shared_ptr<Material> OpenGLRenderer::OnCreateMaterial()
 	{
-		return std::make_shared<OpenGLMaterial>();
+		return smart_pointers::make_shared<OpenGLMaterial>();
 	}
 
-	std::shared_ptr<ReservedUniformBuffers> OpenGLRenderer::OnCreateReversedUniformBuffers()
+	smart_pointers::shared_ptr<ReservedUniformBuffers> OpenGLRenderer::OnCreateReversedUniformBuffers()
 	{
-		return std::make_shared<OpenGLReservedUniformBuffers>();
+		return smart_pointers::make_shared<OpenGLReservedUniformBuffers>();
 	}
 
-	std::shared_ptr<Uniform> OpenGLRenderer::OnCreateUniform(EUniformType type)
+	smart_pointers::shared_ptr<Uniform> OpenGLRenderer::OnCreateUniform(EUniformType type)
 	{
 		switch (type)
 		{
-		case EUniformType::Float: return std::make_shared<OpenGLUniformFloat>();
-		case EUniformType::FVec2: return std::make_shared<OpenGLUniformFVec2>();
-		case EUniformType::FVec3: return std::make_shared<OpenGLUniformFVec3>();
-		case EUniformType::FVec4: return std::make_shared<OpenGLUniformFVec4>();
-		case EUniformType::Int: return std::make_shared<OpenGLUniformInt>();
-		case EUniformType::IVec2: return std::make_shared<OpenGLUniformIVec2>();
-		case EUniformType::IVec3: return std::make_shared<OpenGLUniformIVec3>();
-		case EUniformType::IVec4: return std::make_shared<OpenGLUniformIVec4>();
-		case EUniformType::UInt: return std::make_shared<OpenGLUniformUInt>();
-		case EUniformType::UVec2: return std::make_shared<OpenGLUniformUVec2>();
-		case EUniformType::UVec3: return std::make_shared<OpenGLUniformUVec3>();
-		case EUniformType::UVec4: return std::make_shared<OpenGLUniformUVec4>();
-		case EUniformType::FMat2: return std::make_shared<OpenGLUniformFMat2>();
-		case EUniformType::FMat3: return std::make_shared<OpenGLUniformFMat3>();
-		case EUniformType::FMat4: return std::make_shared<OpenGLUniformFMat4>();
-		case EUniformType::Texture2D: return std::make_shared<OpenGLUniformTexture2D>();
-		case EUniformType::Texture2DArray: return std::make_shared<OpenGLUniformTexture2DArray>();
-		case EUniformType::Texture3D: return std::make_shared<OpenGLUniformTexture3D>();
-		case EUniformType::TextureCubeMap: return std::make_shared<OpenGLUniformTextureCubeMap>();
+		case EUniformType::Float: return smart_pointers::make_shared<OpenGLUniformFloat>();
+		case EUniformType::FVec2: return smart_pointers::make_shared<OpenGLUniformFVec2>();
+		case EUniformType::FVec3: return smart_pointers::make_shared<OpenGLUniformFVec3>();
+		case EUniformType::FVec4: return smart_pointers::make_shared<OpenGLUniformFVec4>();
+		case EUniformType::Int: return smart_pointers::make_shared<OpenGLUniformInt>();
+		case EUniformType::IVec2: return smart_pointers::make_shared<OpenGLUniformIVec2>();
+		case EUniformType::IVec3: return smart_pointers::make_shared<OpenGLUniformIVec3>();
+		case EUniformType::IVec4: return smart_pointers::make_shared<OpenGLUniformIVec4>();
+		case EUniformType::UInt: return smart_pointers::make_shared<OpenGLUniformUInt>();
+		case EUniformType::UVec2: return smart_pointers::make_shared<OpenGLUniformUVec2>();
+		case EUniformType::UVec3: return smart_pointers::make_shared<OpenGLUniformUVec3>();
+		case EUniformType::UVec4: return smart_pointers::make_shared<OpenGLUniformUVec4>();
+		case EUniformType::FMat2: return smart_pointers::make_shared<OpenGLUniformFMat2>();
+		case EUniformType::FMat3: return smart_pointers::make_shared<OpenGLUniformFMat3>();
+		case EUniformType::FMat4: return smart_pointers::make_shared<OpenGLUniformFMat4>();
+		case EUniformType::Texture2D: return smart_pointers::make_shared<OpenGLUniformTexture2D>();
+		case EUniformType::Texture2DArray: return smart_pointers::make_shared<OpenGLUniformTexture2DArray>();
+		case EUniformType::Texture3D: return smart_pointers::make_shared<OpenGLUniformTexture3D>();
+		case EUniformType::TextureCubeMap: return smart_pointers::make_shared<OpenGLUniformTextureCubeMap>();
 		default: return nullptr;
 		}
 	}
 
-	std::shared_ptr<UniformBuffer> OpenGLRenderer::OnCreateUniformBuffer()
+	smart_pointers::shared_ptr<UniformBuffer> OpenGLRenderer::OnCreateUniformBuffer()
 	{
-		return std::make_shared<OpenGLUniformBuffer>();
+		return smart_pointers::make_shared<OpenGLUniformBuffer>();
 	}
 
-	std::shared_ptr<ShaderProgram> OpenGLRenderer::OnCreateShaderProgram()
+	smart_pointers::shared_ptr<ShaderProgram> OpenGLRenderer::OnCreateShaderProgram()
 	{
-		return std::make_shared<OpenGLShaderProgram>();
+		return smart_pointers::make_shared<OpenGLShaderProgram>();
 	}
 
-	std::shared_ptr<DebugRenderer> OpenGLRenderer::OnCreateDebugRenderer()
+	smart_pointers::shared_ptr<DebugRenderer> OpenGLRenderer::OnCreateDebugRenderer()
 	{
-		return std::make_shared<OpenGLDebugRenderer>();
+		return smart_pointers::make_shared<OpenGLDebugRenderer>();
 	}
 
-	std::shared_ptr<Texture2D> OpenGLRenderer::OnCreateTexture2D()
+	smart_pointers::shared_ptr<Texture2D> OpenGLRenderer::OnCreateTexture2D()
 	{
-		return std::make_shared<OpenGLTexture2D>();
+		return smart_pointers::make_shared<OpenGLTexture2D>();
 	}
 
-	std::shared_ptr<Texture2DArray> OpenGLRenderer::OnCreateTexture2DArray()
+	smart_pointers::shared_ptr<Texture2DArray> OpenGLRenderer::OnCreateTexture2DArray()
 	{
-		return std::make_shared<OpenGLTexture2DArray>();
+		return smart_pointers::make_shared<OpenGLTexture2DArray>();
 	}
 
-	std::shared_ptr<Texture3D> OpenGLRenderer::OnCreateTexture3D()
+	smart_pointers::shared_ptr<Texture3D> OpenGLRenderer::OnCreateTexture3D()
 	{
-		return std::make_shared<OpenGLTexture3D>();
+		return smart_pointers::make_shared<OpenGLTexture3D>();
 	}
 
-	std::shared_ptr<TextureCubeMap> OpenGLRenderer::OnCreateTextureCubeMap()
+	smart_pointers::shared_ptr<TextureCubeMap> OpenGLRenderer::OnCreateTextureCubeMap()
 	{
-		return std::make_shared<OpenGLTextureCubeMap>();
+		return smart_pointers::make_shared<OpenGLTextureCubeMap>();
 	}
 
 	void OpenGLRenderer::OnInit()
@@ -160,7 +161,7 @@ namespace gp1::renderer::opengl
 	{
 	}
 
-	void OpenGLRenderer::OnRender(std::shared_ptr<scene::Camera> camera)
+	void OpenGLRenderer::OnRender(const smart_pointers::shared_ptr<scene::Camera>& camera)
 	{
 		if (!camera)
 			return;
@@ -175,17 +176,17 @@ namespace gp1::renderer::opengl
 
 		scene::Scene* scene = camera->GetScene();
 
-		std::shared_ptr<OpenGLReservedUniformBuffers> reservedUniformBuffers = std::reinterpret_pointer_cast<OpenGLReservedUniformBuffers>(m_ReservedUniformBuffers);
+		smart_pointers::shared_ptr<OpenGLReservedUniformBuffers> reservedUniformBuffers = smart_pointers::reinterpret_pointer_cast<OpenGLReservedUniformBuffers>(m_ReservedUniformBuffers);
 
-		std::shared_ptr<UniformFMat4> projectionViewMatrixUniform = reservedUniformBuffers->GetUniform<UniformFMat4>("Camera", "projectionViewMatrix");
+		smart_pointers::shared_ptr<UniformFMat4> projectionViewMatrixUniform = reservedUniformBuffers->GetUniform<UniformFMat4>("Camera", "projectionViewMatrix");
 		if (projectionViewMatrixUniform && projectionViewMatrixUniform->GetType() == UniformFMat4::GetTypeS())
 			projectionViewMatrixUniform->SetValue(camera->GetProjectionViewMatrix());
 
-		std::shared_ptr<UniformFMat4> projectionMatrixUniform = reservedUniformBuffers->GetUniform<UniformFMat4>("Camera", "projectionMatrix");
+		smart_pointers::shared_ptr<UniformFMat4> projectionMatrixUniform = reservedUniformBuffers->GetUniform<UniformFMat4>("Camera", "projectionMatrix");
 		if (projectionMatrixUniform && projectionMatrixUniform->GetType() == UniformFMat4::GetTypeS())
 			projectionMatrixUniform->SetValue(camera->GetProjectionMatrix());
 
-		std::shared_ptr<UniformFMat4> viewMatrixUniform = reservedUniformBuffers->GetUniform<UniformFMat4>("Camera", "viewMatrix");
+		smart_pointers::shared_ptr<UniformFMat4> viewMatrixUniform = reservedUniformBuffers->GetUniform<UniformFMat4>("Camera", "viewMatrix");
 		if (viewMatrixUniform && viewMatrixUniform->GetType() == UniformFMat4::GetTypeS())
 			viewMatrixUniform->SetValue(camera->GetTransformationMatrix(true));
 
@@ -195,24 +196,24 @@ namespace gp1::renderer::opengl
 		{
 			if (!weakEntity.expired())
 			{
-				std::shared_ptr<scene::Entity> entity = weakEntity.lock();
+				smart_pointers::shared_ptr<scene::Entity> entity = weakEntity.lock();
 				if (entity->IsRenderable())
-					RenderEntity(std::reinterpret_pointer_cast<scene::RenderableEntity>(entity));
+					RenderEntity(smart_pointers::reinterpret_pointer_cast<scene::RenderableEntity>(entity));
 			}
 		}
 
-		std::shared_ptr<OpenGLDebugRenderer> debugRenderer = std::reinterpret_pointer_cast<OpenGLDebugRenderer>(m_DebugRenderer);
+		smart_pointers::shared_ptr<OpenGLDebugRenderer> debugRenderer = smart_pointers::reinterpret_pointer_cast<OpenGLDebugRenderer>(m_DebugRenderer);
 		debugRenderer->Render();
 
 		glfwSwapBuffers(Application::GetInstance()->GetWindow().GetNativeHandle());
 	}
 
-	void OpenGLRenderer::RenderEntity(std::shared_ptr<scene::RenderableEntity> entity)
+	void OpenGLRenderer::RenderEntity(const smart_pointers::shared_ptr<scene::RenderableEntity>& entity)
 	{
-		std::shared_ptr<OpenGLMaterial> material = std::reinterpret_pointer_cast<OpenGLMaterial>(entity->GetMaterial());
-		OpenGLMesh*                     mesh     = reinterpret_cast<OpenGLMesh*>(entity->GetMesh()->GetNext());
+		smart_pointers::shared_ptr<OpenGLMaterial> material = smart_pointers::reinterpret_pointer_cast<OpenGLMaterial>(entity->GetMaterial());
+		OpenGLMesh*                                mesh     = reinterpret_cast<OpenGLMesh*>(entity->GetMesh()->GetNext());
 
-		std::shared_ptr<UniformFMat4> transformationMatrixUniform = material->GetUniform<UniformFMat4>("Object", "transformationMatrix");
+		smart_pointers::shared_ptr<UniformFMat4> transformationMatrixUniform = material->GetUniform<UniformFMat4>("Object", "transformationMatrix");
 		if (transformationMatrixUniform && transformationMatrixUniform->GetType() == UniformFMat4::GetTypeS())
 			transformationMatrixUniform->SetValue(entity->GetTransformationMatrix());
 

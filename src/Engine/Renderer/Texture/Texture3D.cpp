@@ -4,10 +4,11 @@
 
 #include "Engine/Renderer/Texture/Texture3D.h"
 #include "Engine/Application.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 namespace gp1::renderer
 {
-	std::shared_ptr<Texture3D> Texture3D::Create()
+	smart_pointers::shared_ptr<Texture3D> Texture3D::Create()
 	{
 		return Application::GetInstance()->GetRenderer()->CreateTexture3D();
 	}

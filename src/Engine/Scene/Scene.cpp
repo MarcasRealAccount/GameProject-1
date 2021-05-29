@@ -3,10 +3,11 @@
 //
 
 #include "Engine/Scene/Scene.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 namespace gp1::scene
 {
-	void Scene::AttachEntity(std::shared_ptr<Entity> entity)
+	void Scene::AttachEntity(const smart_pointers::shared_ptr<Entity>& entity)
 	{
 		if (entity->m_Scene)
 			entity->m_Scene->DetachEntity(entity);
@@ -14,7 +15,7 @@ namespace gp1::scene
 		entity->m_Scene = this;
 	}
 
-	void Scene::DetachEntity(std::shared_ptr<Entity> entity)
+	void Scene::DetachEntity(const smart_pointers::shared_ptr<Entity>& entity)
 	{
 		if (entity->m_Scene != this)
 			return;
@@ -48,7 +49,7 @@ namespace gp1::scene
 			}
 			else
 			{
-				std::shared_ptr<Entity> entity = itr->lock();
+				smart_pointers::shared_ptr<Entity> entity = itr->lock();
 				entity->Update(deltaTime);
 				itr++;
 			}

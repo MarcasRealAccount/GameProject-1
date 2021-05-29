@@ -4,10 +4,11 @@
 
 #include "Engine/Renderer/DebugRenderer.h"
 #include "Engine/Application.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 namespace gp1::renderer
 {
-	std::shared_ptr<DebugRenderer> DebugRenderer::s_DebugRenderer = nullptr;
+	smart_pointers::shared_ptr<DebugRenderer> DebugRenderer::s_DebugRenderer = nullptr;
 
 	void DebugRenderer::DebugDrawPoint(const glm::fvec3& position, float duration, const glm::fvec4& color)
 	{
@@ -33,7 +34,7 @@ namespace gp1::renderer
 			s_DebugRenderer->DrawLine(start, end, duration, color);
 	}
 
-	void DebugRenderer::SetDebugRenderer(std::shared_ptr<DebugRenderer> debugRenderer)
+	void DebugRenderer::SetDebugRenderer(const smart_pointers::shared_ptr<DebugRenderer>& debugRenderer)
 	{
 		CleanUp();
 

@@ -3,6 +3,7 @@
 //
 
 #include "Engine/Renderer/Mesh/Generators/Icosphere.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 #include <array>
 #include <map>
@@ -16,7 +17,7 @@ namespace gp1::renderer::meshGenerators
 
 	using Lookup = std::map<std::pair<uint32_t, uint32_t>, uint32_t>;
 
-	static uint32_t VertexForEdge(Lookup& lookup, std::shared_ptr<StaticMesh> mesh, uint32_t first, uint32_t second)
+	static uint32_t VertexForEdge(Lookup& lookup, const smart_pointers::shared_ptr<StaticMesh>& mesh, uint32_t first, uint32_t second)
 	{
 		std::pair<uint32_t, uint32_t> key(first, second);
 		if (key.first > key.second)
@@ -34,7 +35,7 @@ namespace gp1::renderer::meshGenerators
 		return inserted.first->second;
 	}
 
-	static void subdivide(std::shared_ptr<StaticMesh> mesh)
+	static void subdivide(const smart_pointers::shared_ptr<StaticMesh>& mesh)
 	{
 		Lookup                lookup;
 		std::vector<uint32_t> result;
@@ -65,7 +66,7 @@ namespace gp1::renderer::meshGenerators
 		mesh->m_Indices = result;
 	}
 
-	void GenerateIcosphere(std::shared_ptr<StaticMesh> mesh, uint32_t subdivisions)
+	void GenerateIcosphere(const smart_pointers::shared_ptr<StaticMesh>& mesh, uint32_t subdivisions)
 	{
 		mesh->m_Vertices.clear();
 		mesh->m_Indices.clear();

@@ -11,6 +11,7 @@
 #include "Engine/Utility/Config/ConfigManager.h"
 #include "Engine/Utility/Locale/LocaleManager.h"
 #include "Engine/Utility/Logger.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 #include <chrono>
 #include <cstring>
@@ -20,10 +21,10 @@ namespace gp1
 {
 	//----
 	// TODO(MarcasRealAccount): Please remove this when some actual rendering will take place, as this is just a test entity.
-	static std::shared_ptr<renderer::StaticMesh>     s_TestEntityMesh;
-	static std::shared_ptr<renderer::Material>       s_TestEntityMaterial;
-	static std::shared_ptr<renderer::TextureCubeMap> s_TestEntityTexture;
-	static std::shared_ptr<renderer::ShaderProgram>  s_TestEntityShaderProgram;
+	static smart_pointers::shared_ptr<renderer::StaticMesh>     s_TestEntityMesh;
+	static smart_pointers::shared_ptr<renderer::Material>       s_TestEntityMaterial;
+	static smart_pointers::shared_ptr<renderer::TextureCubeMap> s_TestEntityTexture;
+	static smart_pointers::shared_ptr<renderer::ShaderProgram>  s_TestEntityShaderProgram;
 
 	TestEntity::TestEntity()
 	    : m_Mesh(s_TestEntityMesh), m_Material(s_TestEntityMaterial)
@@ -72,7 +73,7 @@ namespace gp1
 		input::JoystickHandler::Init();
 		m_Renderer->Init();
 
-		m_Camera = std::make_shared<scene::Camera>();
+		m_Camera = smart_pointers::make_shared<scene::Camera>();
 		m_Scene.AttachEntity(m_Camera);
 
 		//----
@@ -169,13 +170,13 @@ void main(void) {
 
 		s_TestEntityMaterial->SetShaderProgram(s_TestEntityShaderProgram);
 
-		std::shared_ptr<renderer::UniformTextureCubeMap> textureUniform = s_TestEntityMaterial->GetUniform<renderer::UniformTextureCubeMap>("Object", "tex");
+		smart_pointers::shared_ptr<renderer::UniformTextureCubeMap> textureUniform = s_TestEntityMaterial->GetUniform<renderer::UniformTextureCubeMap>("Object", "tex");
 		if (textureUniform)
 			textureUniform->SetValue(s_TestEntityTexture);
 
 		for (size_t i = 0; i < sizeof(m_TestEntities) / sizeof(*m_TestEntities); i++)
 		{
-			m_TestEntities[i] = std::make_shared<TestEntity>();
+			m_TestEntities[i] = smart_pointers::make_shared<TestEntity>();
 			m_Scene.AttachEntity(m_TestEntities[i]);
 		}
 		//----

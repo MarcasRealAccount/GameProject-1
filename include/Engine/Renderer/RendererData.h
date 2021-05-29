@@ -4,7 +4,8 @@
 
 #pragma once
 
-#include <memory>
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
+
 #include <type_traits>
 
 namespace gp1::renderer
@@ -28,7 +29,7 @@ namespace gp1::renderer
 			return reinterpret_cast<T*>(m_Next);
 		}
 
-		inline std::shared_ptr<RendererData> GetThis() const
+		inline smart_pointers::shared_ptr<RendererData> GetThis() const
 		{
 			if (m_This.expired())
 				return nullptr;
@@ -37,12 +38,12 @@ namespace gp1::renderer
 		}
 
 		template <typename T, std::enable_if_t<std::is_base_of_v<RendererData, T>, bool> = true>
-		inline std::shared_ptr<T> GetThis() const
+		inline smart_pointers::shared_ptr<T> GetThis() const
 		{
 			if (m_This.expired())
 				return nullptr;
 			else
-				return std::reinterpret_pointer_cast<T>(m_This.lock());
+				return smart_pointers::reinterpret_pointer_cast<T>(m_This.lock());
 		}
 
 		virtual void Update() {}
@@ -57,6 +58,6 @@ namespace gp1::renderer
 	protected:
 		void* m_Next = nullptr;
 
-		std::weak_ptr<RendererData> m_This;
+		smart_pointers::weak_ptr<RendererData> m_This;
 	};
 } // namespace gp1::renderer

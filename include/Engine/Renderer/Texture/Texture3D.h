@@ -5,9 +5,9 @@
 #pragma once
 
 #include "Engine/Renderer/Texture/Texture.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 #include <cstdint>
-#include <memory>
 #include <vector>
 
 namespace gp1::renderer
@@ -23,7 +23,7 @@ namespace gp1::renderer
 	struct Texture3D : public Texture
 	{
 	public:
-		static std::shared_ptr<Texture3D> Create();
+		static smart_pointers::shared_ptr<Texture3D> Create();
 
 	public:
 		virtual ~Texture3D() = default;

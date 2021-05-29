@@ -4,10 +4,11 @@
 
 #include "Engine/Renderer/Texture/Texture2DArray.h"
 #include "Engine/Application.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 namespace gp1::renderer
 {
-	std::shared_ptr<Texture2DArray> Texture2DArray::Create()
+	smart_pointers::shared_ptr<Texture2DArray> Texture2DArray::Create()
 	{
 		return Application::GetInstance()->GetRenderer()->CreateTexture2DArray();
 	}

@@ -4,6 +4,7 @@
 
 #include "Engine/Renderer/Shader/ShaderProgram.h"
 #include "Engine/Application.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 namespace gp1::renderer
 {
@@ -45,7 +46,7 @@ namespace gp1::renderer
 			uniforms.push_back({ element.m_Name, element.m_Type });
 	}
 
-	std::shared_ptr<ShaderProgram> ShaderProgram::Create()
+	smart_pointers::shared_ptr<ShaderProgram> ShaderProgram::Create()
 	{
 		return Application::GetInstance()->GetRenderer()->CreateShaderProgram();
 	}
@@ -99,7 +100,7 @@ namespace gp1::renderer
 					continue;
 				}
 
-				std::shared_ptr<Material> mat = itr->lock();
+				smart_pointers::shared_ptr<Material> mat = itr->lock();
 				mat->UpdateUniformBuffers(uniformBuffers);
 				itr++;
 			}
@@ -188,7 +189,7 @@ namespace gp1::renderer
 		}
 	}
 
-	void ShaderProgram::AddMaterial(std::shared_ptr<Material> material)
+	void ShaderProgram::AddMaterial(const smart_pointers::shared_ptr<Material>& material)
 	{
 		m_Materials.push_back(material);
 		std::vector<std::pair<std::string, std::vector<std::pair<std::string, EUniformType>>>> uniformBuffers;
@@ -196,7 +197,7 @@ namespace gp1::renderer
 		material->UpdateUniformBuffers(uniformBuffers);
 	}
 
-	void ShaderProgram::RemoveMaterial(std::shared_ptr<Material> material)
+	void ShaderProgram::RemoveMaterial(const smart_pointers::shared_ptr<Material>& material)
 	{
 		for (auto itr = m_Materials.begin(); itr != m_Materials.end();)
 		{
@@ -206,7 +207,7 @@ namespace gp1::renderer
 				continue;
 			}
 
-			std::shared_ptr<Material> mat = itr->lock();
+			smart_pointers::shared_ptr<Material> mat = itr->lock();
 			if (mat == material)
 			{
 				m_Materials.erase(itr);

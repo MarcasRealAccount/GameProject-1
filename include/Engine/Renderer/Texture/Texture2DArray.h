@@ -5,9 +5,9 @@
 #pragma once
 
 #include "Engine/Renderer/Texture/Texture2D.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 #include <cstdint>
-#include <memory>
 #include <vector>
 
 namespace gp1::renderer
@@ -15,7 +15,7 @@ namespace gp1::renderer
 	struct Texture2DArray : public Texture
 	{
 	public:
-		static std::shared_ptr<Texture2DArray> Create();
+		static smart_pointers::shared_ptr<Texture2DArray> Create();
 
 	public:
 		virtual ~Texture2DArray() = default;

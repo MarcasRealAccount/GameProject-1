@@ -6,9 +6,10 @@
 
 #pragma once
 
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
+
 #include <cstdint>
 #include <functional>
-#include <memory>
 #include <string>
 
 namespace gp1::renderer
@@ -18,15 +19,15 @@ namespace gp1::renderer
 	struct RendererEntry
 	{
 	public:
-		using Function = std::function<std::shared_ptr<Renderer>()>;
+		using Function = std::function<smart_pointers::shared_ptr<Renderer>()>;
 
 		RendererEntry(const std::string& name, uint32_t priority, Function createRenderer);
 
 	public:
-		std::string             m_Name;
-		uint32_t                m_Priority;
-		Function                m_CreateRenderer;
-		std::weak_ptr<Renderer> m_Renderer;
+		std::string                        m_Name;
+		uint32_t                           m_Priority;
+		Function                           m_CreateRenderer;
+		smart_pointers::weak_ptr<Renderer> m_Renderer;
 	};
 
 	class Renderers
@@ -39,10 +40,10 @@ namespace gp1::renderer
 			return m_Renderers;
 		}
 
-		std::shared_ptr<Renderer> GetRenderer(const std::string& name);
-		std::shared_ptr<Renderer> GetBestRenderer();
+		smart_pointers::shared_ptr<Renderer> GetRenderer(const std::string& name);
+		smart_pointers::shared_ptr<Renderer> GetBestRenderer();
 
-		std::string GetName(std::shared_ptr<Renderer> renderer) const;
+		std::string GetName(const smart_pointers::shared_ptr<Renderer>& renderer) const;
 
 	private:
 		Renderers(const std::initializer_list<RendererEntry>& entries);

@@ -6,9 +6,9 @@
 
 #include "Engine/Renderer/Texture/Texture2D.h"
 #include "Engine/Renderer/Texture/Texture3D.h"
+#include "Engine/Utility/SmartPointers/SmartPointers.h"
 
 #include <cstdint>
-#include <memory>
 #include <vector>
 
 namespace gp1::renderer
@@ -26,7 +26,7 @@ namespace gp1::renderer
 	struct TextureCubeMap : public Texture
 	{
 	public:
-		static std::shared_ptr<TextureCubeMap> Create();
+		static smart_pointers::shared_ptr<TextureCubeMap> Create();
 
 	public:
 		virtual ~TextureCubeMap() = default;
