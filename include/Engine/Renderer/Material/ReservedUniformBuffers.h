@@ -16,20 +16,30 @@ namespace gp1::renderer
 		struct UniformBufferEntry
 		{
 		public:
-			std::string                    m_Name;
-			std::shared_ptr<UniformBuffer> m_UniformBuffer;
+			UniformBufferEntry() = default;
+			UniformBufferEntry(const std::string& name, UniformBuffer* uniformBuffer);
+			UniformBufferEntry(const UniformBufferEntry&) = default;
+			UniformBufferEntry(UniformBufferEntry&& move) noexcept;
+			UniformBufferEntry& operator=(const UniformBufferEntry&) = default;
+
+			UniformBufferEntry& operator=(UniformBufferEntry&& move) noexcept;
+			~UniformBufferEntry();
+
+		public:
+			std::string    m_Name;
+			UniformBuffer* m_UniformBuffer = nullptr;
 		};
 
 	public:
 		virtual ~ReservedUniformBuffers() = default;
 
-		std::shared_ptr<UniformBuffer> GetUniformBuffer(const std::string& name) const;
-		std::shared_ptr<Uniform>       GetUniform(const std::string& bufferName, const std::string& uniformName) const;
+		UniformBuffer* GetUniformBuffer(const std::string& name) const;
+		Uniform*       GetUniform(const std::string& bufferName, const std::string& uniformName) const;
 
 		template <typename T, std::enable_if_t<std::is_base_of_v<Uniform, T>, bool> = true>
-		std::shared_ptr<T> GetUniform(const std::string& bufferName, const std::string& uniformName) const
+		T* GetUniform(const std::string& bufferName, const std::string& uniformName) const
 		{
-			return std::reinterpret_pointer_cast<T>(GetUniform(bufferName, uniformName));
+			return reinterpret_cast<T*>(GetUniform(bufferName, uniformName));
 		}
 
 	protected:

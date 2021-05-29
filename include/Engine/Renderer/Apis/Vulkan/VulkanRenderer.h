@@ -18,24 +18,24 @@ namespace gp1::renderer::vulkan
 		virtual void SetWindowHints() override;
 
 	protected:
-		virtual std::shared_ptr<StaticMesh>             OnCreateStaticMesh() override;
-		virtual std::shared_ptr<Material>               OnCreateMaterial() override;
-		virtual std::shared_ptr<ReservedUniformBuffers> OnCreateReversedUniformBuffers() override;
-		virtual std::shared_ptr<Uniform>                OnCreateUniform(EUniformType type) override;
-		virtual std::shared_ptr<UniformBuffer>          OnCreateUniformBuffer() override;
-		virtual std::shared_ptr<ShaderProgram>          OnCreateShaderProgram() override;
-		virtual std::shared_ptr<DebugRenderer>          OnCreateDebugRenderer() override;
-		virtual std::shared_ptr<Texture2D>              OnCreateTexture2D() override;
-		virtual std::shared_ptr<Texture2DArray>         OnCreateTexture2DArray() override;
-		virtual std::shared_ptr<Texture3D>              OnCreateTexture3D() override;
-		virtual std::shared_ptr<TextureCubeMap>         OnCreateTextureCubeMap() override;
+		virtual StaticMesh*             OnCreateStaticMesh() override;
+		virtual Material*               OnCreateMaterial() override;
+		virtual ReservedUniformBuffers* OnCreateReversedUniformBuffers() override;
+		virtual Uniform*                OnCreateUniform(EUniformType type) override;
+		virtual UniformBuffer*          OnCreateUniformBuffer() override;
+		virtual ShaderProgram*          OnCreateShaderProgram() override;
+		virtual DebugRenderer*          OnCreateDebugRenderer() override;
+		virtual Texture2D*              OnCreateTexture2D() override;
+		virtual Texture2DArray*         OnCreateTexture2DArray() override;
+		virtual Texture3D*              OnCreateTexture3D() override;
+		virtual TextureCubeMap*         OnCreateTextureCubeMap() override;
 
 		virtual void OnInit() override;
 		virtual void OnDeInit() override;
 
 		virtual void OnBeginFrame() override;
 		virtual void OnEndFrame() override;
-		virtual void OnRender(std::shared_ptr<scene::Camera> camera) override;
+		virtual void OnRender(scene::Camera* camera) override;
 	};
 } // namespace gp1::renderer::vulkan
 

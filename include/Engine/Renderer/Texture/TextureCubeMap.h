@@ -26,7 +26,7 @@ namespace gp1::renderer
 	struct TextureCubeMap : public Texture
 	{
 	public:
-		static std::shared_ptr<TextureCubeMap> Create();
+		static TextureCubeMap* Create();
 
 	public:
 		virtual ~TextureCubeMap() = default;

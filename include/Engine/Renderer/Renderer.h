@@ -25,17 +25,19 @@ namespace gp1::renderer
 	class Renderer
 	{
 	public:
-		virtual ~Renderer() = default;
+		virtual ~Renderer();
 
-		std::shared_ptr<StaticMesh>     CreateStaticMesh();
-		std::shared_ptr<Material>       CreateMaterial();
-		std::shared_ptr<Uniform>        CreateUniform(EUniformType type);
-		std::shared_ptr<UniformBuffer>  CreateUniformBuffer();
-		std::shared_ptr<ShaderProgram>  CreateShaderProgram();
-		std::shared_ptr<Texture2D>      CreateTexture2D();
-		std::shared_ptr<Texture2DArray> CreateTexture2DArray();
-		std::shared_ptr<Texture3D>      CreateTexture3D();
-		std::shared_ptr<TextureCubeMap> CreateTextureCubeMap();
+		StaticMesh*     CreateStaticMesh();
+		Material*       CreateMaterial();
+		Uniform*        CreateUniform(EUniformType type);
+		UniformBuffer*  CreateUniformBuffer();
+		ShaderProgram*  CreateShaderProgram();
+		Texture2D*      CreateTexture2D();
+		Texture2DArray* CreateTexture2DArray();
+		Texture3D*      CreateTexture3D();
+		TextureCubeMap* CreateTextureCubeMap();
+
+		void RemoveRendererData(RendererData* data);
 
 		virtual void SetWindowHints() = 0;
 
@@ -46,14 +48,14 @@ namespace gp1::renderer
 
 		void BeginFrame();
 		void EndFrame();
-		void Render(std::shared_ptr<scene::Camera> camera);
+		void Render(scene::Camera* camera);
 
-		inline std::shared_ptr<ReservedUniformBuffers> GetReservedUniformBuffers() const
+		inline ReservedUniformBuffers* GetReservedUniformBuffers() const
 		{
 			return m_ReservedUniformBuffers;
 		}
 
-		inline std::shared_ptr<DebugRenderer> GetDebugRenderer() const
+		inline DebugRenderer* GetDebugRenderer() const
 		{
 			return m_DebugRenderer;
 		}
@@ -62,39 +64,39 @@ namespace gp1::renderer
 		Renderer() = default;
 
 	protected:
-		virtual std::shared_ptr<StaticMesh>             OnCreateStaticMesh()               = 0;
-		virtual std::shared_ptr<Material>               OnCreateMaterial()                 = 0;
-		virtual std::shared_ptr<ReservedUniformBuffers> OnCreateReversedUniformBuffers()   = 0;
-		virtual std::shared_ptr<Uniform>                OnCreateUniform(EUniformType type) = 0;
-		virtual std::shared_ptr<UniformBuffer>          OnCreateUniformBuffer()            = 0;
-		virtual std::shared_ptr<ShaderProgram>          OnCreateShaderProgram()            = 0;
-		virtual std::shared_ptr<DebugRenderer>          OnCreateDebugRenderer()            = 0;
-		virtual std::shared_ptr<Texture2D>              OnCreateTexture2D()                = 0;
-		virtual std::shared_ptr<Texture2DArray>         OnCreateTexture2DArray()           = 0;
-		virtual std::shared_ptr<Texture3D>              OnCreateTexture3D()                = 0;
-		virtual std::shared_ptr<TextureCubeMap>         OnCreateTextureCubeMap()           = 0;
+		virtual StaticMesh*             OnCreateStaticMesh()               = 0;
+		virtual Material*               OnCreateMaterial()                 = 0;
+		virtual ReservedUniformBuffers* OnCreateReversedUniformBuffers()   = 0;
+		virtual Uniform*                OnCreateUniform(EUniformType type) = 0;
+		virtual UniformBuffer*          OnCreateUniformBuffer()            = 0;
+		virtual ShaderProgram*          OnCreateShaderProgram()            = 0;
+		virtual DebugRenderer*          OnCreateDebugRenderer()            = 0;
+		virtual Texture2D*              OnCreateTexture2D()                = 0;
+		virtual Texture2DArray*         OnCreateTexture2DArray()           = 0;
+		virtual Texture3D*              OnCreateTexture3D()                = 0;
+		virtual TextureCubeMap*         OnCreateTextureCubeMap()           = 0;
 
 		virtual void OnInit() {}
 		virtual void OnDeInit() {}
 
 		virtual void OnBeginFrame() {}
 		virtual void OnEndFrame() {}
-		virtual void OnRender(std::shared_ptr<scene::Camera> camera) = 0;
+		virtual void OnRender(scene::Camera* camera) = 0;
 
 	protected:
-		std::shared_ptr<ReservedUniformBuffers> m_ReservedUniformBuffers;
-		std::shared_ptr<DebugRenderer>          m_DebugRenderer;
+		ReservedUniformBuffers* m_ReservedUniformBuffers;
+		DebugRenderer*          m_DebugRenderer;
 
-		std::vector<std::weak_ptr<StaticMesh>>     m_StaticMeshes;
-		std::vector<std::weak_ptr<Material>>       m_Materials;
-		std::vector<std::weak_ptr<Uniform>>        m_Uniforms;
-		std::vector<std::weak_ptr<UniformBuffer>>  m_UniformBuffers;
-		std::vector<std::weak_ptr<ShaderProgram>>  m_ShaderPrograms;
-		std::vector<std::weak_ptr<Texture2D>>      m_Texture2Ds;
-		std::vector<std::weak_ptr<Texture2DArray>> m_Texture2DArrays;
-		std::vector<std::weak_ptr<Texture3D>>      m_Texture3Ds;
-		std::vector<std::weak_ptr<TextureCubeMap>> m_TextureCubeMaps;
+		std::vector<StaticMesh*>     m_StaticMeshes;
+		std::vector<Material*>       m_Materials;
+		std::vector<Uniform*>        m_Uniforms;
+		std::vector<UniformBuffer*>  m_UniformBuffers;
+		std::vector<ShaderProgram*>  m_ShaderPrograms;
+		std::vector<Texture2D*>      m_Texture2Ds;
+		std::vector<Texture2DArray*> m_Texture2DArrays;
+		std::vector<Texture3D*>      m_Texture3Ds;
+		std::vector<TextureCubeMap*> m_TextureCubeMaps;
 
-		std::vector<std::weak_ptr<RendererData>> m_UpdatableRendererDatas;
+		std::vector<RendererData*> m_UpdatableRendererDatas;
 	};
 } // namespace gp1::renderer

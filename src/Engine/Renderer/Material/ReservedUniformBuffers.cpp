@@ -6,6 +6,30 @@
 
 namespace gp1::renderer
 {
+	ReservedUniformBuffers::UniformBufferEntry::UniformBufferEntry(const std::string& name, UniformBuffer* uniformBuffer)
+	    : m_Name(name), m_UniformBuffer(uniformBuffer) {}
+
+	ReservedUniformBuffers::UniformBufferEntry::UniformBufferEntry(UniformBufferEntry&& move) noexcept
+	{
+		m_Name               = std::move(move.m_Name);
+		m_UniformBuffer      = move.m_UniformBuffer;
+		move.m_UniformBuffer = nullptr;
+	}
+
+	ReservedUniformBuffers::UniformBufferEntry& ReservedUniformBuffers::UniformBufferEntry::operator=(UniformBufferEntry&& move) noexcept
+	{
+		m_Name               = std::move(move.m_Name);
+		m_UniformBuffer      = move.m_UniformBuffer;
+		move.m_UniformBuffer = nullptr;
+		return *this;
+	}
+
+	ReservedUniformBuffers::UniformBufferEntry::~UniformBufferEntry()
+	{
+		if (m_UniformBuffer)
+			delete m_UniformBuffer;
+	}
+
 	ReservedUniformBuffers::ReservedUniformBuffers()
 	{
 		// TODO(MarcasRealAccount): Maybe move this code somewhere else.
@@ -20,7 +44,7 @@ namespace gp1::renderer
 		m_UniformBuffers[7] = { "Reserved8", nullptr };
 	}
 
-	std::shared_ptr<UniformBuffer> ReservedUniformBuffers::GetUniformBuffer(const std::string& name) const
+	UniformBuffer* ReservedUniformBuffers::GetUniformBuffer(const std::string& name) const
 	{
 		for (auto& uniformBuffer : m_UniformBuffers)
 			if (uniformBuffer.m_Name == name)
@@ -28,9 +52,9 @@ namespace gp1::renderer
 		return nullptr;
 	}
 
-	std::shared_ptr<Uniform> ReservedUniformBuffers::GetUniform(const std::string& bufferName, const std::string& uniformName) const
+	Uniform* ReservedUniformBuffers::GetUniform(const std::string& bufferName, const std::string& uniformName) const
 	{
-		std::shared_ptr<UniformBuffer> uniformBuffer = GetUniformBuffer(bufferName);
+		UniformBuffer* uniformBuffer = GetUniformBuffer(bufferName);
 		if (uniformBuffer)
 			return uniformBuffer->GetUniform(uniformName);
 		return nullptr;

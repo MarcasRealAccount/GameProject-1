@@ -15,19 +15,19 @@ namespace gp1::scene
 	{
 	public:
 		// Attach an entity to this scene.
-		void AttachEntity(std::shared_ptr<Entity> entity);
+		void AttachEntity(Entity* entity);
 		// Detach an entity from this scene.
-		void DetachEntity(std::shared_ptr<Entity> entity);
+		void DetachEntity(Entity* entity);
 
 		void Update(float deltaTime);
 
 		// Get all entities this scene holds.
-		inline const std::vector<std::weak_ptr<Entity>>& GetEntities()
+		inline const std::vector<Entity*>& GetEntities()
 		{
 			return m_Entities;
 		}
 
 	private:
-		std::vector<std::weak_ptr<Entity>> m_Entities; // The entities this scene holds.
+		std::vector<Entity*> m_Entities; // The entities this scene holds.
 	};
 } // namespace gp1::scene

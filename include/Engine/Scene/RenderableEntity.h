@@ -20,7 +20,7 @@ namespace gp1::scene
 			return true;
 		}
 
-		inline virtual std::shared_ptr<renderer::Mesh>     GetMesh() const     = 0;
-		inline virtual std::shared_ptr<renderer::Material> GetMaterial() const = 0;
+		inline virtual renderer::Mesh*     GetMesh() const     = 0;
+		inline virtual renderer::Material* GetMaterial() const = 0;
 	};
 } // namespace gp1::scene

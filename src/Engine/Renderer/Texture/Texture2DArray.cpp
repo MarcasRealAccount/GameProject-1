@@ -7,7 +7,7 @@
 
 namespace gp1::renderer
 {
-	std::shared_ptr<Texture2DArray> Texture2DArray::Create()
+	Texture2DArray* Texture2DArray::Create()
 	{
 		return Application::GetInstance()->GetRenderer()->CreateTexture2DArray();
 	}

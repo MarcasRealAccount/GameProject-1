@@ -20,10 +20,10 @@ namespace gp1
 {
 	//----
 	// TODO(MarcasRealAccount): Please remove this when some actual rendering will take place, as this is just a test entity.
-	static std::shared_ptr<renderer::StaticMesh>     s_TestEntityMesh;
-	static std::shared_ptr<renderer::Material>       s_TestEntityMaterial;
-	static std::shared_ptr<renderer::TextureCubeMap> s_TestEntityTexture;
-	static std::shared_ptr<renderer::ShaderProgram>  s_TestEntityShaderProgram;
+	static renderer::StaticMesh*     s_TestEntityMesh;
+	static renderer::Material*       s_TestEntityMaterial;
+	static renderer::TextureCubeMap* s_TestEntityTexture;
+	static renderer::ShaderProgram*  s_TestEntityShaderProgram;
 
 	TestEntity::TestEntity()
 	    : m_Mesh(s_TestEntityMesh), m_Material(s_TestEntityMaterial)
@@ -31,9 +31,13 @@ namespace gp1
 		m_Position.z = -5.0f;
 	}
 
+	TestEntity::~TestEntity()
+	{
+	}
+
 	void TestEntity::Update(float deltaTime)
 	{
-		m_Rotation.y += deltaTime * 10.0f;
+		//m_Rotation.y += deltaTime * 10.0f;
 	}
 	//----
 
@@ -72,7 +76,7 @@ namespace gp1
 		input::JoystickHandler::Init();
 		m_Renderer->Init();
 
-		m_Camera = std::make_shared<scene::Camera>();
+		m_Camera = new scene::Camera();
 		m_Scene.AttachEntity(m_Camera);
 
 		//----
@@ -169,13 +173,13 @@ void main(void) {
 
 		s_TestEntityMaterial->SetShaderProgram(s_TestEntityShaderProgram);
 
-		std::shared_ptr<renderer::UniformTextureCubeMap> textureUniform = s_TestEntityMaterial->GetUniform<renderer::UniformTextureCubeMap>("Object", "tex");
+		renderer::UniformTextureCubeMap* textureUniform = s_TestEntityMaterial->GetUniform<renderer::UniformTextureCubeMap>("Object", "tex");
 		if (textureUniform)
 			textureUniform->SetValue(s_TestEntityTexture);
 
 		for (size_t i = 0; i < sizeof(m_TestEntities) / sizeof(*m_TestEntities); i++)
 		{
-			m_TestEntities[i] = std::make_shared<TestEntity>();
+			m_TestEntities[i] = new TestEntity();
 			m_Scene.AttachEntity(m_TestEntities[i]);
 		}
 		//----
@@ -204,8 +208,23 @@ void main(void) {
 
 	Application::~Application()
 	{
+		delete m_Camera;
+		m_Camera = nullptr;
+
+		//----
+		// TODO(MarcasRealAccount): Please remove this when some actual rendering will take place, as this is just a test entity.
+		for (TestEntity* testEntity : m_TestEntities)
+			delete testEntity;
+
+		delete s_TestEntityMesh;
+		delete s_TestEntityMaterial;
+		delete s_TestEntityTexture;
+		delete s_TestEntityShaderProgram;
+		//----
+
 		m_Renderer->DeInit();
-		m_Renderer.reset();
+		renderer::Renderers::s_Renderers->DestroyRenderer(m_Renderer);
+		m_Renderer = nullptr;
 		m_Window.DeInit();
 		input::JoystickHandler::DeInit();
 		input::InputHandler::CleanUp();

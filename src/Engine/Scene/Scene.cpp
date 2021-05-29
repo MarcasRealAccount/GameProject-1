@@ -6,7 +6,7 @@
 
 namespace gp1::scene
 {
-	void Scene::AttachEntity(std::shared_ptr<Entity> entity)
+	void Scene::AttachEntity(Entity* entity)
 	{
 		if (entity->m_Scene)
 			entity->m_Scene->DetachEntity(entity);
@@ -14,44 +14,26 @@ namespace gp1::scene
 		entity->m_Scene = this;
 	}
 
-	void Scene::DetachEntity(std::shared_ptr<Entity> entity)
+	void Scene::DetachEntity(Entity* entity)
 	{
 		if (entity->m_Scene != this)
 			return;
 
 		for (auto itr = m_Entities.begin(); itr != m_Entities.end();)
 		{
-			if (itr->expired())
+			if (*itr == entity)
 			{
-				itr = m_Entities.erase(itr);
+				m_Entities.erase(itr);
+				entity->m_Scene = nullptr;
+				break;
 			}
-			else
-			{
-				if (itr->lock() == entity)
-				{
-					m_Entities.erase(itr);
-					entity->m_Scene = nullptr;
-					break;
-				}
-				itr++;
-			}
+			itr++;
 		}
 	}
 
 	void Scene::Update(float deltaTime)
 	{
-		for (auto itr = m_Entities.begin(); itr != m_Entities.end();)
-		{
-			if (itr->expired())
-			{
-				itr = m_Entities.erase(itr);
-			}
-			else
-			{
-				std::shared_ptr<Entity> entity = itr->lock();
-				entity->Update(deltaTime);
-				itr++;
-			}
-		}
+		for (auto entity : m_Entities)
+			entity->Update(deltaTime);
 	}
 } // namespace gp1::scene

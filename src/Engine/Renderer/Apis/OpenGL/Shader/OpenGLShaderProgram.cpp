@@ -52,9 +52,9 @@ namespace gp1::renderer::opengl
 
 		if (m_Dirty)
 		{
-			for (auto& material : m_Materials)
+			for (auto material : m_Materials)
 			{
-				std::shared_ptr<OpenGLMaterial> mat = std::reinterpret_pointer_cast<OpenGLMaterial>(material.lock());
+				OpenGLMaterial* mat = reinterpret_cast<OpenGLMaterial*>(material);
 				mat->UpdateGLData();
 			}
 			m_Dirty = false;

@@ -7,7 +7,7 @@
 
 namespace gp1::renderer
 {
-	std::shared_ptr<TextureCubeMap> TextureCubeMap::Create()
+	TextureCubeMap* TextureCubeMap::Create()
 	{
 		return Application::GetInstance()->GetRenderer()->CreateTextureCubeMap();
 	}

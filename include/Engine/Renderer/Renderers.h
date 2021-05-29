@@ -18,15 +18,15 @@ namespace gp1::renderer
 	struct RendererEntry
 	{
 	public:
-		using Function = std::function<std::shared_ptr<Renderer>()>;
+		using Function = std::function<Renderer*()>;
 
 		RendererEntry(const std::string& name, uint32_t priority, Function createRenderer);
 
 	public:
-		std::string             m_Name;
-		uint32_t                m_Priority;
-		Function                m_CreateRenderer;
-		std::weak_ptr<Renderer> m_Renderer;
+		std::string m_Name;
+		uint32_t    m_Priority;
+		Function    m_CreateRenderer;
+		Renderer*   m_Renderer = nullptr;
 	};
 
 	class Renderers
@@ -39,10 +39,11 @@ namespace gp1::renderer
 			return m_Renderers;
 		}
 
-		std::shared_ptr<Renderer> GetRenderer(const std::string& name);
-		std::shared_ptr<Renderer> GetBestRenderer();
+		Renderer* GetRenderer(const std::string& name);
+		Renderer* GetBestRenderer();
+		void      DestroyRenderer(Renderer* renderer);
 
-		std::string GetName(std::shared_ptr<Renderer> renderer) const;
+		std::string GetName(Renderer* renderer) const;
 
 	private:
 		Renderers(const std::initializer_list<RendererEntry>& entries);

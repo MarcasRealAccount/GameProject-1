@@ -26,28 +26,29 @@ namespace gp1::renderer::opengl
 		friend class OpenGLDebugRenderer;
 
 	private:
-		static std::shared_ptr<ShaderProgram> s_DebugShaderProgram;
+		static ShaderProgram* s_DebugShaderProgram;
 
 	public:
-		inline virtual std::shared_ptr<Mesh> GetMesh() const override
+		inline virtual Mesh* GetMesh() const override
 		{
 			return m_Mesh;
 		}
 
-		inline virtual std::shared_ptr<Material> GetMaterial() const override
+		inline virtual Material* GetMaterial() const override
 		{
 			return m_Material;
 		}
 
 	protected:
-		OpenGLDebugObject(float duration, const glm::fvec4& color, std::shared_ptr<Mesh> mesh);
+		OpenGLDebugObject(float duration, const glm::fvec4& color, Mesh* mesh);
+		virtual ~OpenGLDebugObject();
 
 	protected:
 		float m_SpawnTime;
 		float m_Duration;
 
-		std::shared_ptr<Mesh>     m_Mesh;
-		std::shared_ptr<Material> m_Material;
+		Mesh*     m_Mesh;
+		Material* m_Material;
 	};
 
 	struct OpenGLDebugPoint : public OpenGLDebugObject
@@ -56,7 +57,7 @@ namespace gp1::renderer::opengl
 		friend class OpenGLDebugRenderer;
 
 	private:
-		static std::shared_ptr<StaticMesh> s_PointMesh;
+		static StaticMesh* s_PointMesh;
 
 	public:
 		OpenGLDebugPoint(const glm::fvec3& position, float duration, const glm::fvec4& color);
@@ -68,7 +69,7 @@ namespace gp1::renderer::opengl
 		friend class OpenGLDebugRenderer;
 
 	private:
-		static std::shared_ptr<StaticMesh> s_SphereMesh;
+		static StaticMesh* s_SphereMesh;
 
 	public:
 		OpenGLDebugSphere(const glm::fvec3& origin, float radius, float duration, const glm::fvec4& color);
@@ -80,7 +81,7 @@ namespace gp1::renderer::opengl
 		friend class OpenGLDebugRenderer;
 
 	private:
-		static std::shared_ptr<StaticMesh> s_BoxMesh;
+		static StaticMesh* s_BoxMesh;
 
 	public:
 		OpenGLDebugBox(const glm::fvec3& origin, const glm::fvec3& extents, const glm::fvec3& rotation, float duration, const glm::fvec4& color);
@@ -92,7 +93,7 @@ namespace gp1::renderer::opengl
 		friend class OpenGLDebugRenderer;
 
 	private:
-		static std::shared_ptr<StaticMesh> s_LineMesh;
+		static StaticMesh* s_LineMesh;
 
 	public:
 		OpenGLDebugLine(const glm::fvec3& start, const glm::fvec3& end, float duration, const glm::fvec4& color);
@@ -112,7 +113,7 @@ namespace gp1::renderer::opengl
 		void Render();
 
 	private:
-		std::vector<std::shared_ptr<OpenGLDebugObject>> m_Entities;
+		std::vector<OpenGLDebugObject*> m_Entities;
 	};
 } // namespace gp1::renderer::opengl
 #endif

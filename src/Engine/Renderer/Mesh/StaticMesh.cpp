@@ -7,7 +7,7 @@
 
 namespace gp1::renderer
 {
-	std::shared_ptr<StaticMesh> StaticMesh::Create()
+	StaticMesh* StaticMesh::Create()
 	{
 		return Application::GetInstance()->GetRenderer()->CreateStaticMesh();
 	}
